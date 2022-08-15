@@ -1,0 +1,72 @@
+@import '../../sass/variables';
+
+$cl: $btn-color-primary;
+
+.title-config {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+.ctn-slider {
+  font-size: 1rem;
+  font-family: monospace;
+  span {
+    color: $cl;
+  }
+  .MuiSlider-thumb {
+    &:hover {
+      transition: none;
+      box-shadow: 0px 0px 0px 5px rgba($cl, .16);
+    }
+    &:active {
+      transition: none;
+      box-shadow: 0px 0px 0px 10px rgba($cl, .16);
+    }
+  }
+  .MuiSlider-valueLabelLabel {
+    color: #FFFFFF;
+    font-family: monospace;
+  }
+}
+
+.ctn-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .button {
+    color: #FFFFFF;
+    background: $cl;
+    margin-top: 2rem;
+    border: 1px solid $cl;
+    padding: .3rem 2rem;
+    &:hover {
+      transition: none;
+      background: $cl;
+      border: 1px solid $cl;
+      box-shadow: 0px 7px 7px rgba($cl, .2);
+    }
+  }
+}
+
+.ctn-textField {
+  label {
+    color: #fffa;
+    &.Mui-focused {
+      color: #fffa;
+    }
+  }
+  label ~ div {
+    &::before {
+      border-bottom: 1px solid #FFFFFF;
+    }
+    &:hover:not(.Mui-disabled):before {
+      border-bottom: 2px solid #FFFFFF;
+    }
+    &::after {
+      border-bottom: 2px solid $cl;
+    }
+  }
+  input {
+    background: transparent;
+    color: #FFFFFF;
+  }
+}

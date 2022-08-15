@@ -1,0 +1,154 @@
+@import '../../sass/variables.scss';
+
+// Defaults styles for pseudo elements
+// pe: pseudo elements
+@mixin default-pe ($draw: false) {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @if $draw == true {
+      border: 1px solid #f55;
+    }
+}
+// Colors that depend on the state of the visualizer element
+@mixin colors($bs: true, $bs-inset: false, $bg: $bg-color, $cl: $btn-color-primary) {
+  border: 1px solid $cl;
+  background-color: rgba($bg, 1);
+  @if $bs {
+    @if $bs-inset == false {
+      box-shadow:
+        0px 0px 5px rgba($cl, .3),
+        0px 0px 15px rgba($cl, .3),
+        0px 0px 25px rgba($cl, .3);
+    }
+    @else {
+      box-shadow:
+        0px 0px 5px rgba($cl, .3) inset,
+        0px 0px 15px rgba($cl, .3) inset,
+        0px 0px 25px rgba($cl, .3) inset;
+    }
+  }
+  @else {
+    box-shadow: none;
+  }
+}
+
+.visualizer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  margin: 1rem auto;
+  border-radius: 50%;
+  padding: 1em;
+  &::before {
+    @include default-pe();
+    top: -5px;
+    left: -5px;
+    border-radius: 50%;
+    padding: 4px;
+    z-index: -1;
+  }
+  @media (min-width: 350px) {
+    width: 250px;
+    height: 250px;
+  }
+}
+.not-work {
+  @include colors($bs-inset: true, $cl: #F55555);
+  &::before {
+    @include colors($bg: #f55555, $cl: #F55555);
+  }
+}
+
+.work {
+  @include colors($bs-inset: true);
+  &::before {
+    animation-name: Flicker;
+    animation-duration: 1s;
+    @include colors($bg: $btn-color-primary);
+  }
+}
+
+@keyframes Flicker {
+  0% {
+      @include colors($bs: false, $bg: #404040);
+  }
+  50% {
+    @include colors($bs: false, $bg: $btn-color-primary);
+  }
+  75% {
+      @include colors($bs: false, $bg: #404040);
+  }
+  100% {
+    @include colors($bg: $btn-color-primary);
+  }
+}
+.pause {
+  box-shadow: none;
+  &::before {
+    box-shadow: none;
+  }
+}
+
+.inactive {
+  @include colors($bs: false, $bs-inset: true, $cl: #404040);
+  &::before {
+    transition: all 1s linear;
+    @include colors($bs:false, $bg: #404040, $cl: #404040);
+  }
+}
+/* Animation for the visualizer */
+.visualizer {
+  &.animation {
+    border: none;
+  }
+  &.animation::before {
+    @include default-pe();
+    top: -4px;
+    left: -4px;
+    background: linear-gradient(135deg, $btn-color-primary, transparent);
+    border-radius: 50%;
+    padding: 4px;
+    z-index: -1;
+    animation: Rotate 2s linear infinite;
+  }
+
+}
+@keyframes Rotate {
+  0% {
+    filter: blur(10px);
+    transform: rotate(0);
+    background: linear-gradient(135deg, $btn-color-primary, transparent);
+  }
+  100% {
+    filter: blur(10px);
+    transform: rotate(360deg);
+    background: linear-gradient(135deg, $btn-color-primary, transparent);
+  }
+}
+
+/* General */
+.visualizer {
+  .marker, .config {
+    font-size: .7rem;
+    @media (min-width: 350px) {font-size: 1rem}
+  }
+  .timer {
+    line-height: 2em;
+    font-size: 2em;
+  }
+  .config {
+    display: flex;
+    gap: 1em;
+  }
+  .bold {
+    font-weight: bold;
+  }
+}
